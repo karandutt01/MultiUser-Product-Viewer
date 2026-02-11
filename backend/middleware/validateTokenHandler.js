@@ -1,6 +1,5 @@
 const firebaseAdmin = require('../config/firebaseAdmin')
 
-
 const validateToken = async(req,res,next) => {
 
   try {
@@ -10,9 +9,7 @@ const validateToken = async(req,res,next) => {
       return res.status(401).json({message: "No token provided"});
     }
     const token = bearerToken.split(' ')[1];
-    console.log('token', token)
-    const decodedToken =  await firebaseAdmin.auth().verifyIdToken(token);
-    console.log('decodedToken', decodedToken)
+    const decodedToken =  await firebaseAdmin.admin.auth().verifyIdToken(token);
 
     if(!decodedToken){
       res.json({message: "User is not authorized"})
@@ -21,6 +18,7 @@ const validateToken = async(req,res,next) => {
       next();
     }
   } catch (error) {
+    console.log(error)
     res.status(401).json({message: "Invalid or expired token"});
   }
   

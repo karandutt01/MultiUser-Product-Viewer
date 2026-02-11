@@ -4,7 +4,7 @@ const firebaseAdmin = require('../config/firebaseAdmin');
 const registerUser = async(req,res) => {
     try {
         const {firstname, lastname, email, password} = req.body;
-        const user = await firebaseAdmin.auth().createUser({
+        const user = await firebaseAdmin.admin.auth().createUser({
             email,
             password,
             displayName:`${firstname} ${lastname}`
