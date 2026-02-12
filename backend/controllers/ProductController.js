@@ -71,7 +71,32 @@ const productList = async(req, res) => {
 }
 
 
+const productDetails = async(req, res) => {
+  try {
+
+    const productId = req.params.id;
+    const products = await db.collection('products').doc(`${productId}`).get();
+
+    if(products){
+      return res.status(200).json({
+        doc:products.data(),
+        message:"Product Data fetched successfully"
+      })
+    }else{
+      return res.status(200).json({
+        doc:[],
+        message:"Product was not found"
+      })
+    }
+
+  } catch (error) {
+    return res.json({error: error.message})
+  }
+}
+
+
 module.exports = {
   addProduct,
-  productList
+  productList,
+  productDetails
 }
